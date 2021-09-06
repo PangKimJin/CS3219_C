@@ -4,9 +4,9 @@ const app = express();
 app.use(express.json());
 
 const posts = [
-    { id: 1, name: 'post1'},
-    { id: 2, name: 'post2'},
-    { id: 3, name: 'post3'}
+    { id: 1, title: 'My First Blog Post', author: "Kim Jin", category: "Misc"},
+    { id: 2, title: 'Learning to Code', author: "Kim Jin", category: "Programming"},
+    { id: 3, title: 'Debugging for the First Time', author: "Kim Jin", category: "Programming"}
 ]
 
 app.get('/', (req, res) => {
@@ -26,13 +26,19 @@ app.get('/api/posts/:id', (req, res) => {
 });
 
 app.post('/api/posts/', (req, res) => {
-    if (!req.body.name) {
-        res.status(400).send('Error 400: Please include a name');
+    if (!req.body.title  || !req.body.author || !req.body.category) {
+        res.status(400).send('Error 400: Every post must have a title, author, and category');
+        return;
+    }
+    if (req.body.title.length < 2  || req.body.author.length < 2 || req.body.category.length < 2) {
+        res.status(400).send('Error 400: The post title, author, and category must each be longer than 1 character');
         return;
     }
     const newPost = {
         id: posts.length + 1,
-        name: req.body.name
+        title: req.body.title,
+        author: req.body.author,
+        category: req.body.category
     };
     posts.push(newPost);
     res.send(newPost);
@@ -46,13 +52,19 @@ app.put('/api/posts/:id', (req, res) => {
     }
 
     // validate PUT request body, if invalid, return 400 error
-    if (!req.body.name) {
-        res.status(400).send('Error 400: Please include a name');
+    if (!req.body.title  || !req.body.author || !req.body.category) {
+        res.status(400).send('Error 400: Every update request must have a title, author, and category');
+        return;
+    }
+    if (req.body.title.length < 2  || req.body.author.length < 2 || req.body.category.length < 2) {
+        res.status(400).send('Error 400: The post title, author, and category must each be longer than 1 character');
         return;
     }
 
     // update post
-    post.name = req.body.name;
+    post.title = req.body.title;
+    post.author = req.body.author;
+    post.category = req.body.category;
     res.send(post);
 });
 
