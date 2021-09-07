@@ -78,10 +78,8 @@ app.delete('/api/posts/:id', (req, res) => {
     res.send(postToDelete);
 });
 
-// const port = process.env.PORT || 3000;
-// app.listen(port, () => console.log(`Listening on port ${port}...`));
-
-var server = app.listen(3000, function () {
+const port = process.env.PORT || 3000;
+var server = app.listen(port, function () {
     var host = server.address().address;
     var port = server.address().port;
   
