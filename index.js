@@ -11,9 +11,15 @@ app.get('/', (req, res) => {
     res.send('hello world');
 });
 
+app.post("/post_name", async(req, res) => {
+    console.log(req )
+    let obj = req.body;
+    res.send(obj);
+})
+
 app.use('/api', apiRoutes);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 var server = app.listen(port, function () {
     var host = server.address().address;
     var port = server.address().port;
