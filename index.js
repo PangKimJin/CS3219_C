@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
     res.send('hello world');
 });
 
-app.post("/post_name", async(req, res) => {
+app.post("/new", async(req, res) => {
     console.log(req )
     let obj = req.body;
     res.send(obj);
