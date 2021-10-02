@@ -9,6 +9,9 @@ exports.index = function(req, res) {
 exports.new = function(req, res) {
     if (!req.body.title  || !req.body.author || !req.body.category) {
         res.status(400).send('Error 400: Every post must have a title, author, and category');
+        res.status(400).send(req.body.title);
+        res.status(400).send(req.body.author);
+        res.status(400).send(req.body.category);
         return;
     }
     if (req.body.title.length < 2  || req.body.author.length < 2 || req.body.category.length < 2) {
@@ -63,6 +66,7 @@ exports.delete = function(req, res) {
     const postToDelete = Post.posts.find(p => p.id === parseInt(req.params.id));
     if (!postToDelete) {
         res.status(404).send('Error 404: Invalid DELETE request, no post with id ' + req.params.id + ' found');
+        return;
     }
     const deletedIndex = Post.posts.indexOf(postToDelete);
     Post.posts.splice(deletedIndex, 1);
