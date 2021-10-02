@@ -9,9 +9,6 @@ exports.index = function(req, res) {
 exports.new = function(req, res) {
     if (!req.body.title  || !req.body.author || !req.body.category) {
         res.status(400).send('Error 400: Every post must have a title, author, and category');
-        res.status(400).send(req.body.title);
-        res.status(400).send(req.body.author);
-        res.status(400).send(req.body.category);
         return;
     }
     if (req.body.title.length < 2  || req.body.author.length < 2 || req.body.category.length < 2) {
