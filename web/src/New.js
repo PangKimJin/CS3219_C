@@ -20,7 +20,7 @@ const New = () => {
             setErrorMessage(null);
         } catch (error) {
             console.log(error);
-            setErrorMessage("Add Post Failed: Make sure to fill in all fields!");
+            setErrorMessage("Add Post Failed: Make sure all fields are filled with a minimum of 2 characters!");
             setSuccessMessage(null);
         }
     }

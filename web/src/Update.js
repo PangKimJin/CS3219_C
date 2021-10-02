@@ -23,7 +23,7 @@ const Update = () => {
             setErrorMessage(null);
         } catch (error) {
             console.log(error);
-            setErrorMessage("Update Post Failed: Make sure to fill in all fields!");
+            setErrorMessage("Update Post Failed: Make sure all fields are filled with a minimum of 2 characters!");
             setSuccessMessage(null);
         }
     }
