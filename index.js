@@ -12,7 +12,24 @@ app.get('/', (req, res) => {
     res.send('hello world');
 });
 
+app.get('/404', function(req, res, next){
+  // trigger a 404 since no other middleware
+  // will match /404 after this one, and we're not
+  // responding here
+  next();
+});
+
+
 app.use('/api', apiRoutes);
+app.use(function(req, res, next){
+  res.status(404);
+
+  res.format({
+    default: function () {
+      res.type('txt').send('Error 404: Page not found, please enter a valid URL')
+    }
+  })
+});
 
 const port = process.env.PORT || 3001;
 var server = app.listen(port, function () {

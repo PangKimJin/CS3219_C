@@ -7,6 +7,7 @@ import New from './New';
 import PostsHome from './PostsHome';
 import Update from './Update';
 import Delete from './Delete';
+import NotFound from './NotFound';
 
 function App() {
     
@@ -30,6 +31,7 @@ function App() {
                 <Route exact path="/api/delete">
                     <Delete />
                 </Route>
+                <Route component={NotFound} />
             </Switch>
         </div>
     </Router>

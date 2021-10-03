@@ -19,15 +19,23 @@ describe("/GET", () => {
                 done();
             });
     });
-});
-describe("/GET/:id", () => {
-    it("should get the post at specified id", (done) => {
+    it("should get all posts", (done) => {
         chai.request(app)
-            .get("/api/posts/1")
+            .get("/api/posts")
             .end((err, res) => {
                 res.should.have.status(200);
-                res.body.should.be.a('object');
-                assert.equal("My First Blog Post", res.body.title);
+                res.body.should.be.an.instanceof(Array)
+                assert.equal(3, res.body.length);
+                done();
+            });
+    });
+    it("should throw error if GET request URL does not exist", (done) => {
+        chai.request(app)
+            .get("/doesnotexist")
+            .end((err, res) => {
+                res.should.have.status(404);
+                res.text.should.be.a('string');
+                assert.equal("Error 404: Page not found, please enter a valid URL", res.text);
                 done();
             });
     });
@@ -143,6 +151,18 @@ describe('/DELETE/:id', () => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 assert.equal("Learning to Code", res.body.title);
+                done();
+            });
+    })
+
+    it('should not DELETE any post if id is invalid', (done) => {
+        chai.request(app)
+            .delete("/api/posts/7")
+            .send()
+            .end((err, res) => {
+                res.should.have.status(404);
+                res.body.should.be.a('object');
+                assert.equal('Error 404: Invalid DELETE request, no post with id 7 found', res.text);
                 done();
             });
     })
