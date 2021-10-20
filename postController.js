@@ -2,7 +2,11 @@ const Post = require('./postModel');
 
 // GET /api/posts
 exports.index = function(req, res) {
-    res.send(Post.posts);
+    if (req.user.name === "admin") {
+        res.json(Post.posts);
+    } else {
+        res.json(Post.posts.filter(post => post.author === req.user.name));
+    }
 }
 
 // POST /api/posts
@@ -28,7 +32,9 @@ exports.new = function(req, res) {
 // GET /api/posts/:id
 exports.view = function(req, res) {
     const post = Post.posts.find(p => p.id === parseInt(req.params.id));
-    if (!post) {
+    if (post.author !== req.user.name && req.user.name !== "admin") {
+        res.status(403).send('Error 403: Unauthorized');
+    } else if (!post) {
         res.status(404).send('Error 404: Invalid GET request, no post with id ' + req.params.id + ' found');
     }
     res.send(post);
